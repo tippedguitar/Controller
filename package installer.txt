@@ -1,0 +1,126 @@
+package com.example.trialexam;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.view.View;
+import android.widget.Button;
+
+import android.os.Bundle;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        Button b1 = findViewById(R.id.alert1);
+        b1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlert();
+            }
+        });
+    }
+    private void showAlert(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Alert 1").setMessage("This is the alert message").show();
+    }
+}
+
+-------------------------------------------------------------------
+
+import React,{useState} from "react";
+import {View, Text, TextInput, Button, StyleSheet} from "react-native";
+
+const app = () =>{
+    const [red1, setred] = useState("");
+    const [blue1, setblue] = useState("");
+    const col1 = () =>{
+        setred("red1");
+        setblue("");
+    }
+    const col2 = () =>{
+        setred("");
+        setblue("blue1");
+        
+    }
+
+    return(
+        <View>
+            <Text>Choose Color from the below</Text>
+            <Button title="Red" onPress={col1}/>
+            <Button title="Blue" onPress={col2}/>
+            {red1?(
+                <Text style={styles.RED}>This text is changing colour.</Text>
+            ): null}
+            {blue1?(
+                <Text style={styles.BLUE}>This text is changing colour.</Text>
+            ): null}
+        </View>
+    )
+};
+const styles = StyleSheet.create({
+    RED:{
+        color: "red",
+    },
+    BLUE: {
+        color: "blue",
+    },
+});
+
+export default app;
+
+----------------------------------------------------------------------------------
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { View, Text, Button, StyleSheet } from 'react-native';
+
+const Stack = createStackNavigator();
+
+const HomeScreen = ({ navigation }) => {
+  const goToDetails = () => {
+    navigation.navigate('DetailsScreen');
+  };
+
+  return (
+    <View style={styles.container}>
+      <Text>Welcome to Home Screen!</Text>
+      <Button title="Go to Details" onPress={goToDetails} />
+    </View>
+  );
+};
+
+const DetailsScreen = () => {
+  return (
+    <View style={styles.container}>
+      <Text>This is the Details Screen!</Text>
+    </View>
+  );
+};
+
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="HomeScreen" component={HomeScreen} />
+        <Stack.Screen name="DetailsScreen" component={DetailsScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export default App;
+
+
+npm install app-prog1
