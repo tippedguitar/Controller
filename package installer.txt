@@ -596,3 +596,72 @@ Button changeColorButton = findViewById(R.id.changeColorButton);
 <Button android:id="@+id/changeColorButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Change Color" android:layout_below="@id/textView" android:layout_centerHorizontal="true"/>
 </RelativeLayout>
 ------------------------------------
+import React, { useState } from 'react';
+import { View, Text, Button, FlatList, StyleSheet } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
+
+const App = () => {
+  const [expenses, setExpenses] = useState([]);
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const addExpense = () => {
+    const newExpense = {
+      date: selectedDate.toLocaleDateString(),
+      amount: Math.floor(Math.random() * 100),
+    };
+
+    setExpenses([...expenses, newExpense]);
+  };
+
+  const renderExpenseItem = ({ item }) => (
+    <View style={styles.expenseItem}>
+      <Text>{item.date}</Text>
+      <Text>${item.amount}</Text>
+    </View>
+  );
+
+  const handleDateChange = (event, selectedDate) => {
+    setShowDatePicker(false);
+    if (selectedDate) {
+      setSelectedDate(selectedDate);
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <Button title="Add Expense" onPress={() => setShowDatePicker(true)} />
+      <FlatList
+        data={expenses}
+        keyExtractor={(item, index) => index.toString()}
+        renderItem={renderExpenseItem}
+      />
+      {showDatePicker && (
+        <DateTimePicker
+          value={selectedDate}
+          mode="date"
+          display="default"
+          onChange={handleDateChange}
+        />
+      )}
+      <Button title="Add Expense" onPress={addExpense} />
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+  },
+  expenseItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingVertical: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+});
+
+export default App;
+-----------------------------------------
